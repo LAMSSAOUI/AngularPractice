@@ -1,1 +1,34 @@
 <p>nouvelle-tache works!</p>
+<form #nouvelleTacheForm="ngForm" (ngSubmit)="soumettreFormulaire">
+    <div>
+        <label for="nom">Nom de la tache : </label>
+        <input type="text" id="nom" name="nom" [(ngModel)]="nom" required minlength="4">
+        <div *ngIf="nouvelleTacheForm.controls['nom'].hasError('minlength') && nouvelleTacheForm.controls['nom'].touched">
+            <p class="erreur-message">
+                le nom doit contenir au moins 4 caracteres .
+            </p>
+        </div>
+    </div>
+    <div>
+        <label for="categorie">categorie :</label>
+        <select name="categorie" id="categorie" [(ngModel)]="categorie" required>
+            <option value="Normal">Normale</option>
+            <option value="Urgent">Urgent</option>
+            <option value="Tres urgent">Tres urgent</option>
+        </select>
+    </div>
+    <div>
+        <label for="complete">Completude :</label>
+        <input type="checkbox" id="complete" name="complete" [(ngModel)]="complete">
+    </div>
+    <div>
+        <label for="emailResponsable">Email du responsable :</label>
+        <input type="email" id="emailResponsable" name="emailResponsable" [(ngModel)]="emailResponsable" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+[a-zA-Z]{2,}">
+        <div *ngIf="nouvelleTacheForm.controls['emailResponsable'].hasError('pattern') && nouvelleTacheForm.controls['emailResponsable'].touched">
+            <p class="erreur-message">
+                Veuillez saisir une adresse email valide .
+            </p>
+        </div>
+    </div>
+    <button type="submit" [disabled]="nouvelleTacheForm.invalid">Soumettre</button>
+</form>
