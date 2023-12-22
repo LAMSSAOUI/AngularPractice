@@ -1,0 +1,43 @@
+
+<p>liste-taches works!</p>
+<div>
+    <label for="categorie">Filtrer par categories :</label>
+    <select  id="categorie" [(ngModel)]="categorieFiltre">
+        <option value="Toutes">Toutes</option>
+        <option value="Normal">Normale</option>
+        <option value="Urgent">Urgent</option>
+        <option value="Tres urgent">Tres urgent</option>
+    </select>
+</div>
+<ul>
+    <ng-container *ngIf="categorieFiltre==='Toutes'">
+        <li *ngFor="let tache of taches">
+            <span [ngClass] = "{'tache-complete':tache.complete}">
+                 {{ tache.nom }} - {{ tache.categories}} - {{ tache.complete ? 'Complete' : 'Incomplete' }}
+            </span>
+        </li>
+    </ng-container>
+    <ng-container *ngIf="categorieFiltre!=='Toutes'" >
+        <ng-container *ngFor="let tache of taches">
+            <ng-container *ngIf="tache.categories===categorieFiltre">
+            <ng-container [ngSwitch] = "tache.categories">
+                <li *ngSwitchCase="'Normal'">
+                    <span [ngClass] = "{'tache-complete':tache.complete}">
+                          {{ tache.nom }} - {{ tache.complete ? 'Complete' : 'Incomplete' }}
+                    </span>
+                </li>
+                <li *ngSwitchCase="'Urgent'">
+                    <span [ngClass] = "{'tache-complete':tache.complete}">
+                           {{ tache.nom }} est  {{ tache.complete ? 'Complete' : 'Incomplete' }}
+                    </span>
+                </li>
+                <li *ngSwitchCase="'Tres urgent'">
+                    <span [ngClass] = "{'tache-complete':tache.complete}">
+                           {{ tache.nom }} - {{ tache.complete ? 'Complete' : 'Incomplete' }}
+                    </span>
+                </li>
+            </ng-container>
+        </ng-container>
+        </ng-container>
+    </ng-container>
+</ul>
